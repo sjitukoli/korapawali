@@ -1,59 +1,100 @@
 <!DOCTYPE html>
-<html lang="mr">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Korapawali Citizen Portal</title>
-<link rel="stylesheet" href="style.css">
+<style>
+body{margin:0;font-family:Segoe UI;background:#eef3ff}
+header{background:linear-gradient(#003b8f,#001a4d);color:white;padding:40px;text-align:center}
+nav{background:#002f70;padding:10px;text-align:center}
+nav a{color:white;margin:0 12px;text-decoration:none;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;padding:20px}
+.card{background:white;padding:15px;border-radius:14px;box-shadow:0 4px 10px #bbb}
+button{background:#003b8f;color:white;padding:10px;border:none;border-radius:8px}
+.lang{position:fixed;top:10px;right:10px}
+.chatbot{position:fixed;bottom:20px;right:20px;background:#003b8f;color:white;padding:14px;border-radius:50%;cursor:pointer}
+#bot{display:none;position:fixed;bottom:80px;right:20px;width:300px;background:white;border-radius:12px;box-shadow:0 4px 10px #bbb;padding:10px}
+</style>
 </head>
+
 <body>
 
-<nav class="topbar">
-  <div class="logo">Korapawali Citizen Portal</div>
-  <div class="menu">
-    <a href="#schemes">योजना</a>
-    <a href="#gr">GR शोध</a>
-    <a href="#officers">अधिकारी</a>
-    <a href="#complaint">तक्रार</a>
-  </div>
-</nav>
+<div class="lang">
+<button onclick="setLang('mr')">मराठी</button>
+<button onclick="setLang('en')">English</button>
+</div>
 
-<header class="hero">
-  <h1>आपली पंचायत – आपली सेवा</h1>
-  <p>Digital Panchayat, Smart Seva</p>
-  <a href="https://wa.me/919823621888" class="btn">WhatsApp सेवा</a>
+<header>
+<h1 id="t1">Korapawali Citizen Portal</h1>
+<p id="t2">आपली पंचायत – आपली सेवा</p>
+<a href="https://wa.me/919823621888"><button id="t3">WhatsApp सेवा</button></a>
 </header>
 
-<section class="quick">
-  <div class="card">🧾 दाखले</div>
-  <div class="card">🧑‍🌾 योजना</div>
-  <div class="card">📜 GR शोध</div>
-  <div class="card">🧑‍💻 तक्रार</div>
-</section>
+<nav>
+<a href="#schemes" id="m1">योजना</a>
+<a href="#gr" id="m2">GR</a>
+<a href="#rti" id="m3">RTI</a>
+<a href="#complaint" id="m4">तक्रार</a>
+</nav>
 
-<section id="schemes" class="panel"></section>
+<div id="schemes" class="grid"></div>
 
-<section id="gr" class="panel">
-  <h2>GR Smart Search</h2>
-  <input id="grkey" placeholder="GR शोधा">
-  <button onclick="searchGR()">Search</button>
-  <div id="grresult"></div>
-</section>
+<div id="gr" class="card">
+<h2>GR Smart Search</h2>
+<input id="grkey"><button onclick="searchGR()">Search</button>
+<div id="gralert"></div>
+</div>
 
-<section id="officers" class="panel">
-  <h2>जिल्हा परिषद अधिकारी</h2>
-  <div id="officerlist"></div>
-</section>
+<div id="rti" class="card">
+<h2>RTI Desk</h2>
+<button onclick="window.open('https://rtionline.gov.in')">RTI Apply Online</button>
+</div>
 
-<section id="complaint" class="panel">
-  <h2>तक्रार नोंदणी</h2>
-  <input id="name" placeholder="नाव">
-  <input id="mobile" placeholder="मोबाईल">
-  <textarea id="msg" placeholder="तक्रार लिहा"></textarea>
-  <button onclick="send()">Submit</button>
-</section>
+<div id="complaint" class="card">
+<h2>Complaint</h2>
+<input id="name" placeholder="Name">
+<input id="mobile" placeholder="Mobile">
+<textarea id="msg"></textarea>
+<button onclick="sendComplaint()">Submit</button>
+</div>
 
-<div class="chatbot">🤖 Korapawali Mitra</div>
+<div class="chatbot" onclick="toggleBot()">🤖</div>
+<div id="bot">
+<div id="botlog"></div>
+<input id="botq" placeholder="Ask..." onkeydown="if(event.key=='Enter')askBot()">
+</div>
 
-<script src="app.js"></script>
+<script>
+const API="PASTE_YOUR_SCRIPT_LINK";
+
+// Language
+const L={mr:{t1:"Korapawali Citizen Portal",t2:"आपली पंचायत – आपली सेवा",t3:"WhatsApp सेवा",m1:"योजना",m2:"GR",m3:"RTI",m4:"तक्रार"},
+en:{t1:"Korapawali Citizen Portal",t2:"Your Panchayat – Your Service",t3:"WhatsApp Service",m1:"Schemes",m2:"GR",m3:"RTI",m4:"Complaint"}};
+function setLang(l){for(let k in L[l])document.getElementById(k).innerText=L[l][k];}
+
+// Load Schemes with AUTO APPLY LINK
+fetch(API+"?action=schemes").then(r=>r.json()).then(d=>{
+let h="";
+d.slice(1).forEach(s=>{
+h+=`<div class='card'><h3>${s[0]}</h3><p>${s[1]}</p>
+<p><b>Docs:</b>${s[3]}</p>
+<button onclick="window.open('https://aaplesarkar.mahaonline.gov.in')">Apply</button></div>`;
+});
+schemes.innerHTML=h;
+});
+
+// Complaint
+function sendComplaint(){fetch(`${API}?action=addComplaint&name=${name.value}&mobile=${mobile.value}&msg=${msg.value}`);alert("Submitted");}
+
+// GR
+function searchGR(){window.open("https://maharashtra.gov.in/1125/Home/Index?search="+grkey.value);}
+
+// Bot
+function toggleBot(){bot.style.display=bot.style.display=='none'?'block':'none';}
+function askBot(){
+fetch(API+"?action=bot&q="+botq.value).then(r=>r.text()).then(a=>botlog.innerHTML+=`<div>${a}</div>`);
+botq.value="";
+}
+</script>
 </body>
 </html>

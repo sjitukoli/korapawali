@@ -1,23 +1,20 @@
-const API="PASTE_YOUR_API_LINK";
+function doGet(e){
+const ss=SpreadsheetApp.getActive();
+const a=e.parameter.action;
 
-function loadSchemes(){
- fetch(API+"?action=schemes").then(r=>r.json()).then(d=>{
-  let h="<h2>योजना</h2>";
-  d.forEach(s=>h+=`<div class='card'>${s}</div>`);
-  document.getElementById("schemes").innerHTML=h;
- });
+if(a=="schemes") return json(ss.getSheetByName("SCHEMES"));
+if(a=="addComplaint"){ss.getSheetByName("COMPLAINTS").appendRow([new Date(),e.parameter.name,e.parameter.mobile,e.parameter.msg]); return out("OK");}
+if(a=="bot"){ return out(botReply(e.parameter.q||"")); }
 }
 
-function searchGR(){
- let k=document.getElementById("grkey").value;
- fetch("https://api.allorigins.win/raw?url=https://maharashtra.gov.in/GR?search="+k)
- .then(r=>r.text()).then(t=>document.getElementById("grresult").innerHTML=t);
+function botReply(q){
+q=q.toLowerCase();
+if(q.includes("pmay")) return "PMAY घरकुल योजना – Apply via Aaple Sarkar Portal.";
+if(q.includes("pension")) return "पेन्शन योजना – Docs Aadhaar, Age proof, Bank Passbook.";
+if(q.includes("gr")) return "GR शोधण्यासाठी GR Search वापरा.";
+if(q.includes("complaint")) return "तक्रार Online Portal वर नोंदवा.";
+return "कृपया योजना, GR, RTI किंवा तक्रार विषयी विचारा.";
 }
 
-function loadOfficers(){
- fetch("https://api.allorigins.win/raw?url=https://jalgaon.gov.in/zp-officers")
- .then(r=>r.text()).then(t=>document.getElementById("officerlist").innerHTML=t);
-}
-
-loadSchemes();
-loadOfficers();
+function json(sh){return ContentService.createTextOutput(JSON.stringify(sh.getDataRange().getValues())).setMimeType(ContentService.MimeType.JSON);}
+function out(t){return ContentService.createTextOutput(t);}
