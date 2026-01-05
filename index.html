@@ -7,13 +7,20 @@
 </head>
 <body>
 
-<header class="smart-hero">
-  <div class="overlay">
-    <h1>Korapawali Citizen Portal</h1>
-    <p>आपली पंचायत – आपली सेवा</p>
-    <p>Digital Panchayat, Smart Seva</p>
-    <a href="https://wa.me/919823621888" class="whatsapp-btn">WhatsApp सेवा</a>
+<nav class="topbar">
+  <div class="logo">Korapawali Citizen Portal</div>
+  <div class="menu">
+    <a href="#schemes">योजना</a>
+    <a href="#gr">GR शोध</a>
+    <a href="#officers">अधिकारी</a>
+    <a href="#complaint">तक्रार</a>
   </div>
+</nav>
+
+<header class="hero">
+  <h1>आपली पंचायत – आपली सेवा</h1>
+  <p>Digital Panchayat, Smart Seva</p>
+  <a href="https://wa.me/919823621888" class="btn">WhatsApp सेवा</a>
 </header>
 
 <section class="quick">
@@ -23,20 +30,26 @@
   <div class="card">🧑‍💻 तक्रार</div>
 </section>
 
-<section class="mahapurush">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Chhatrapati_Shivaji_Maharaj.jpg">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Savitribai_Phule.jpg">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Bhimrao_Ambedkar.jpg">
+<section id="schemes" class="panel"></section>
+
+<section id="gr" class="panel">
+  <h2>GR Smart Search</h2>
+  <input id="grkey" placeholder="GR शोधा">
+  <button onclick="searchGR()">Search</button>
+  <div id="grresult"></div>
 </section>
 
-<section id="news"></section>
+<section id="officers" class="panel">
+  <h2>जिल्हा परिषद अधिकारी</h2>
+  <div id="officerlist"></div>
+</section>
 
-<section class="card">
-<h2>तक्रार नोंदणी</h2>
-<input id="name" placeholder="नाव">
-<input id="mobile" placeholder="मोबाईल">
-<textarea id="msg" placeholder="तक्रार लिहा"></textarea>
-<button onclick="send()">Submit</button>
+<section id="complaint" class="panel">
+  <h2>तक्रार नोंदणी</h2>
+  <input id="name" placeholder="नाव">
+  <input id="mobile" placeholder="मोबाईल">
+  <textarea id="msg" placeholder="तक्रार लिहा"></textarea>
+  <button onclick="send()">Submit</button>
 </section>
 
 <div class="chatbot">🤖 Korapawali Mitra</div>

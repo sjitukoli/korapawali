@@ -1,8 +1,8 @@
-body{margin:0;font-family:Segoe UI;background:#f2f7ff}
-.smart-hero{height:65vh;background:linear-gradient(#004aad,#001f4d);color:white;text-align:center}
-.overlay{padding-top:80px}
+body{margin:0;font-family:Segoe UI;background:#f2f6ff}
+.topbar{background:#003b8f;color:white;padding:12px 30px;display:flex;justify-content:space-between}
+.topbar a{color:white;margin:0 10px;text-decoration:none}
+.hero{background:linear-gradient(#003b8f,#001a4d);color:white;text-align:center;padding:60px}
+.btn{background:#00bcd4;color:white;padding:12px 25px;border-radius:25px;text-decoration:none}
 .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:20px}
-.card{background:white;padding:15px;border-radius:14px;box-shadow:0 4px 12px #ccc}
-.mahapurush{text-align:center}
-.mahapurush img{height:120px;border-radius:10px;margin:10px}
-.chatbot{position:fixed;bottom:20px;right:20px;background:#004aad;color:white;padding:12px;border-radius:50%}
+.card,.panel{background:white;padding:20px;border-radius:15px;box-shadow:0 4px 12px #ccc}
+.chatbot{position:fixed;bottom:20px;right:20px;background:#003b8f;color:white;padding:12px;border-radius:50%}

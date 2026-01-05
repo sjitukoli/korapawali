@@ -1,14 +1,23 @@
-const API="https://script.google.com/macros/s/AKfycbzjfFSG1UmEWoQxBEI602vmH9AhUic_bhHC7Ppbx7GX5WDQwVnsBt77IBg4PnLqVInF/exec";
+const API="PASTE_YOUR_API_LINK";
 
-fetch(API+"?action=news")
-.then(r=>r.json())
-.then(d=>{
- let h="";
- d.slice(1).forEach(n=> h+=`<div class='card'>📰 ${n[1]}</div>`);
- document.getElementById("news").innerHTML=h;
-});
-
-function send(){
- fetch(`${API}?action=addComplaint&name=${name.value}&mobile=${mobile.value}&msg=${msg.value}`);
- alert("तक्रार यशस्वीरीत्या नोंदवली गेली आहे.");
+function loadSchemes(){
+ fetch(API+"?action=schemes").then(r=>r.json()).then(d=>{
+  let h="<h2>योजना</h2>";
+  d.forEach(s=>h+=`<div class='card'>${s}</div>`);
+  document.getElementById("schemes").innerHTML=h;
+ });
 }
+
+function searchGR(){
+ let k=document.getElementById("grkey").value;
+ fetch("https://api.allorigins.win/raw?url=https://maharashtra.gov.in/GR?search="+k)
+ .then(r=>r.text()).then(t=>document.getElementById("grresult").innerHTML=t);
+}
+
+function loadOfficers(){
+ fetch("https://api.allorigins.win/raw?url=https://jalgaon.gov.in/zp-officers")
+ .then(r=>r.text()).then(t=>document.getElementById("officerlist").innerHTML=t);
+}
+
+loadSchemes();
+loadOfficers();
