@@ -1,6 +1,8 @@
-body{font-family:sans-serif;background:#f2f7ff}
-.hero{background:#004aad;color:white;padding:25px;text-align:center}
-.card{background:white;margin:15px;padding:15px;border-radius:12px}
-input,textarea{width:95%;padding:8px;margin:5px}
-button{background:#004aad;color:white;padding:10px;border:none;border-radius:8px}
-.whatsapp{color:white;text-decoration:none;font-weight:bold}
+body{margin:0;font-family:Segoe UI;background:#f2f7ff}
+.smart-hero{height:65vh;background:linear-gradient(#004aad,#001f4d);color:white;text-align:center}
+.overlay{padding-top:80px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:20px}
+.card{background:white;padding:15px;border-radius:14px;box-shadow:0 4px 12px #ccc}
+.mahapurush{text-align:center}
+.mahapurush img{height:120px;border-radius:10px;margin:10px}
+.chatbot{position:fixed;bottom:20px;right:20px;background:#004aad;color:white;padding:12px;border-radius:50%}
